@@ -1,0 +1,8 @@
+Django == 5.0.1
+pyrebase4 == 4.7.1
+firebase-admin == 6.3.0
+djangorestframework == 3.14.0
+coverage == 7.4.0
+django-cors-headers == 4.3.1
+beautifulsoup4 == 4.12.3
+tqdm == 4.66.1
