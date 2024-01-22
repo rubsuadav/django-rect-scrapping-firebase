@@ -13,7 +13,10 @@ main_url = "https://gastroranking.es"
 # Auxiliar methos
 def populate_restaurants_details(s3):
     datos = s3.find("section", id="content")
-    detalles = datos.find("div", class_="hl_row")
+    try:
+        detalles = datos.find("div", class_="hl_row")
+    except:
+        pass
 
     provincia = datos.find(
         "h1", class_="contentTitle").find_all("span")[1].text.strip()
@@ -78,15 +81,30 @@ def populate_scores(s3):
 
 
 def populate_comments(s3):
-    # comentarios, num estrellas que tiene ese comentario, fecha del comentario, nombre del usuario que ha publicado el comentario
-    pass
+    datos_comentarios = s3.find("section", class_="container nopadding reviews").find(
+        "div", id="reviews").find_all("div", {"itemprop": "review"})
+    lista_comentarios = []
+    for dato in datos_comentarios:
+        comentario = {}
+        comentario['texto'] = dato.find("div", class_="text").text.strip()
+
+        datos_usuario = dato.find(
+            "div", class_="userSite pull-left")
+
+        comentario['fecha'] = datos_usuario.find(
+            "div", class_="ratingDate").text.strip()
+        comentario['usuario'] = datos_usuario.span.text.strip()
+        lista_comentarios.append(comentario)
+
+    return lista_comentarios
 
 
 def populate_restaurants(data_url):
+    # lista de restaurantes que se van a guardar en la base de datos de firebase
+    restaurantes = []
     # hay 15 por cada pagina y 14781 paginas, es decir, 221715 restaurantes
     # ponemos 550 restaurantes para que no tarde tanto, es decir, 37 paginas
     for i in range(1, 15):
-        print("Pagina: " + str(i))
         url = data_url + "?page=" + str(i)
         page = requests.get(url)
         s2 = BeautifulSoup(page.content, "html.parser")
@@ -94,6 +112,7 @@ def populate_restaurants(data_url):
         data = s2.find("section", id="content")
         datos = data.find("div", class_="searchResults").find_all(
             "div", class_="resultItem")
+
         for dato in datos:
             etiqueta_enlace = dato.h3.a
             nombre = etiqueta_enlace.text.strip()
@@ -105,27 +124,31 @@ def populate_restaurants(data_url):
 
             prov, calle, tel, web, desc = populate_restaurants_details(s3)
             ptos_gastro, ptos_trip, op_gastro, op_trip = populate_scores(s3)
-            # comentarios, estrellas, fecha, usuario = populate_comments(s3)
-    return {
-        "nombre": nombre,
-        "provincia": prov,
-        "calle": calle,
-        "telefono": tel,
-        "web": web,
-        "descripcion": desc,
-        "puntuacion_gastroranking": ptos_gastro,
-        "puntuacion_tripadvisor": ptos_trip,
-        "opiniones_gastroranking": op_gastro,
-        "opiniones_tripadvisor": op_trip,
-        # "comentarios": comentarios,
-        # "estrellas": estrellas,
-        # "fecha": fecha,
-        # "usuario": usuario
-    }
+            datos_comentario = populate_comments(s3)
+
+            comentarios = []  # lista de comentarios que se van a guardar en la base de datos de firebase
+
+            for dato_comentario in datos_comentario:
+                comentarios.append(dato_comentario)
+
+            restaurantes.append({
+                "nombre": nombre,
+                "provincia": prov,
+                "calle": calle,
+                "telefono": tel,
+                "web": web,
+                "descripcion": desc,
+                "puntuacion_gastroranking": ptos_gastro,
+                "puntuacion_tripadvisor": ptos_trip,
+                "opiniones_gastroranking": op_gastro,
+                "opiniones_tripadvisor": op_trip,
+                "comentarios": comentarios,
+            })
+
+    return restaurantes
 
 
 def scrapping():
-    restaurants_list = []
     main_page = requests.get(main_url)
     s = BeautifulSoup(main_page.content, "html.parser")
     main_data = s.find(
@@ -133,9 +156,8 @@ def scrapping():
     url = main_data.a["href"]
     data_url = main_url + url
     restaurants = populate_restaurants(data_url)
-    restaurants_list.append(restaurants)
 
-    return restaurants_list
+    return restaurants
 
 
 # Main method
@@ -143,14 +165,20 @@ class PopulateDatabase(BaseCommand):
     help = 'Populate database'
 
     def populate(self, *args, **options):
-        data = scrapping()
-        """with tqdm(total=len(jobs), desc='Populating database') as pbar:
-            for i, job in enumerate(jobs):
-                firestore.collection(u'jobs').add(job)
+        restaurants = scrapping()
+        with tqdm(total=len(restaurants), desc='Populating database') as pbar:
+            for i, restaurant in enumerate(restaurants):
+                comments = restaurant.pop('comentarios', [])
+                _, restaurant_ref = firestore.collection(
+                    u'restaurantes').add(restaurant)
+                for comment in comments:
+                    _, _ = restaurant_ref.collection(
+                        'comentarios').add(comment)
+
                 pbar.update(1)
 
                 # Calcute % completed
-                percent_complete = (i + 1) / len(jobs) * 100
+                percent_complete = (i + 1) / len(restaurants) * 100
 
                 # Change the color of the progress bar according to the percentage completed
                 if 0 <= percent_complete <= 25:
@@ -167,4 +195,4 @@ class PopulateDatabase(BaseCommand):
                     f'{color}Populating database{Style.RESET_ALL}')
 
         self.stdout.write(self.style.SUCCESS(
-            '\n Successfully populated database'))"""
+            '\n Successfully populated database'))
