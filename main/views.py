@@ -4,13 +4,24 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
+def get_restaurant_comments(restaurante_col, restaurantes):
+    restaurantes_con_comentarios = []
+    for restaurante in restaurantes:
+        res = restaurante.to_dict()
+        comentarios = restaurante_col.document(restaurante.id).collection(
+            u'comentarios').order_by(u'fecha', direction=Query.ASCENDING).stream()
+        res['comentarios'] = [comentario.to_dict()
+                              for comentario in comentarios]
+        restaurantes_con_comentarios.append(res)
+
+    return restaurantes_con_comentarios
+
+
 class IndexView(APIView):
     def get(self, request, restaurant_id=''):
         page = request.query_params.get('page')
         restaurante_col = firestore.collection(u'restaurantes')
-
-        # Listado de restaurantes
-        if restaurant_id == '':
+        if restaurant_id == '':  # Listado de restaurantes
             if page:  # Si se especifica la paginacion
                 try:
                     page = int(page)
@@ -21,30 +32,13 @@ class IndexView(APIView):
 
                 # 10 restaurantes por pagina
                 restaurantes = restaurante_col.order_by(
-                    u'nombre', direction=Query.ASCENDING).limit(30).offset((int(page) - 1) * 30).stream()
-
-                restaurantes_con_comentarios = []
-                for restaurante in restaurantes:
-                    res = restaurante.to_dict()
-                    comentarios = restaurante_col.document(restaurante.id).collection(
-                        u'comentarios').order_by(u'fecha', direction=Query.ASCENDING).stream()
-                    res['comentarios'] = [comentario.to_dict()
-                                          for comentario in comentarios]
-                    restaurantes_con_comentarios.append(res)
-                return Response(data=restaurantes_con_comentarios, status=200)
+                    u'nombre', direction=Query.ASCENDING).limit(10).offset((int(page) - 1) * 10).stream()
+                return Response(data=get_restaurant_comments(restaurante_col, restaurantes), status=200)
 
             else:  # Sin paginacion
                 restaurantes = restaurante_col.order_by(
                     u'nombre', direction=Query.ASCENDING).stream()
-                restaurantes_con_comentarios = []
-                for restaurante in restaurantes:
-                    res = restaurante.to_dict()
-                    comentarios = restaurante_col.document(
-                        restaurante.id).collection(u'comentarios').order_by(u'fecha', direction=Query.ASCENDING).stream()
-                    res['comentarios'] = [comentario.to_dict()
-                                          for comentario in comentarios]
-                    restaurantes_con_comentarios.append(res)
-                return Response(data=restaurantes_con_comentarios, status=200)
+                return Response(data=get_restaurant_comments(restaurante_col, restaurantes), status=200)
 
         else:  # Detalle de un restaurante
             restaurante = restaurante_col.document(
