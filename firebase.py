@@ -36,7 +36,7 @@ with open('credentials.json', 'wb') as temp_file:
 cred = credentials.Certificate('credentials.json')
 
 if not firebase_admin._apps:
-    firebase_admin.initialize_app(cred)
+    app = firebase_admin.initialize_app(cred)
 
 # Initialize Firebase Firestore
 firestore = FirestoreClient.from_service_account_json('credentials.json')

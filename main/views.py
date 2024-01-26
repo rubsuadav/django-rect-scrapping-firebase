@@ -1,4 +1,4 @@
-from firebase import firestore, auth
+from firebase import firestore
 from google.cloud.firestore_v1 import Query
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -57,10 +57,8 @@ class IndexView(APIView):
 
 class SubscriptionView(APIView):
     def post(self, request):
-        user = auth.sign_in_with_email_and_password(
-            request.data.get('email'), request.data.get('password'))
-
-        doc_ref = firestore.collection(u'customers', user["localId"], u'checkout_sessions').add({
+        user_id = request.data.get('user_id')
+        doc_ref = firestore.collection(u'customers', user_id, u'checkout_sessions').add({
             'price': request.data.get('price'),
             "trial_from_plan": True,
             "allow_promotion_codes": True,
