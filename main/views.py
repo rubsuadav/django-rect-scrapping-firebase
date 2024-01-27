@@ -70,3 +70,17 @@ class SubscriptionView(APIView):
             doc = doc_ref[1].get()
         checkout_session = doc.to_dict()
         return Response(data={"checkout_session": checkout_session["url"]}, status=status.HTTP_200_OK)
+
+
+class ChatView(APIView):
+    def post(self, request):
+        user_id = request.data.get('user_id')
+        prompt = request.data.get('prompt')
+        doc_ref = firestore.collection(u'customers', user_id, u'chats').add({
+            'prompt': prompt
+        })
+        doc = doc_ref[1].get()
+        while 'response' not in doc.to_dict():
+            doc = doc_ref[1].get()
+        response = doc.to_dict()
+        return Response(data={"response": response}, status=status.HTTP_200_OK)
