@@ -3,7 +3,7 @@
 ### 1. Clone this repository
 
 ```bash
-git clone https://github.com/rubsuadav/django-scrapping-firebase.git
+git clone https://github.com/rubsuadav/django-rect-scrapping-firebase.git
 ```
 
 ### 2. Create a virtualenv
