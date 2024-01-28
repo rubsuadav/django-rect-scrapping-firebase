@@ -61,7 +61,7 @@ class LoginView(APIView):
             user_details = Client(app).get_user(user['localId'])
             if (not user_details.email_verified):
                 auth.send_email_verification(user['idToken'])
-            return Response(data={'access_token': user['idToken'], 'refresh_token': user["refreshToken"]}, status=status.HTTP_200_OK)
+            return Response(data={'access_token': user['idToken'], 'refresh_token': user["refreshToken"], 'userId': user["localId"]}, status=status.HTTP_200_OK)
         except ValidationError as e:
             return Response(data=e.detail, status=status.HTTP_400_BAD_REQUEST)
         except HTTPError as e2:
