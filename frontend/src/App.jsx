@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import { AuthContextProvider } from "./context/authContext";
 import PublicRouter from "./context/routers/PublicRouter";
 import PrivateRouter from "./context/routers/PrivateRouter";
+import ProtectedRouter from "./context/routers/ProtectedRouter";
 
 export default function App() {
   return (
@@ -30,6 +31,10 @@ export default function App() {
             <Route path="" element={<PrivateRouter />}>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+            </Route>
+            {/* Protected routes  =====================================*/}
+            <Route path="" element={<ProtectedRouter />}>
+              {/* <Route path="/dashboard" element={<Chat />} /> */}
             </Route>
           </Routes>
           <Footer />
