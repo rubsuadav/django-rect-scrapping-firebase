@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./pages/Home";
+import Chat from "./pages/Chat";
 
 // Authentication and routers imports
 import { AuthContextProvider } from "./context/authContext";
@@ -34,7 +35,7 @@ export default function App() {
             </Route>
             {/* Protected routes  =====================================*/}
             <Route path="" element={<ProtectedRouter />}>
-              {/* <Route path="/dashboard" element={<Chat />} /> */}
+              <Route path="/chat" element={<Chat />} />
             </Route>
           </Routes>
           <Footer />

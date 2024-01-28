@@ -11,6 +11,7 @@ export default function Navbar() {
 
   function handleLogout() {
     logout();
+    localStorage.removeItem("userId");
     navigate("/");
   }
 
@@ -96,43 +97,44 @@ export default function Navbar() {
               ITEM 5
             </Link>
           </DropDown>
-          <Link
-            className="inline-flex items-center bg-yellow-600 border-0 py-1 px-3 focus:outline-none hover:bg-yellow-500 rounded mt-4 md:mt-0 text-white text-xl"
-            to={"/"}
-          >
-            Boton
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="w-4 h-4 ml-1"
-              viewBox="0 0 24 24"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </Link>
         </nav>
-
         {isAuthenticated && (
-          <button
-            className="inline-flex items-center bg-green-600 border-0 py-1 px-3 focus:outline-none hover:bg-green-400 rounded text-base mt-4 md:mt-0 text-white mr-8"
-            onClick={handleLogout}
-          >
-            Cerrar sesion
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="w-4 h-4 ml-1"
-              viewBox="0 0 24 24"
+          <>
+            <Link
+              className="inline-flex items-center bg-yellow-600 border-0 py-1 px-3 focus:outline-none hover:bg-yellow-500 rounded mt-4 md:mt-0 text-white text-xl mr-16"
+              to={"/chat"}
             >
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </button>
+              Iniciar chat
+              <svg
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="w-4 h-4 ml-1"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </Link>
+            <button
+              className="inline-flex items-center bg-green-600 border-0 py-1 px-3 focus:outline-none hover:bg-green-400 rounded text-base mt-4 md:mt-0 text-white mr-8"
+              onClick={handleLogout}
+            >
+              Cerrar sesion
+              <svg
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="w-4 h-4 ml-1"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </>
         )}
         {!isAuthenticated && (
           <>

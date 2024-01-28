@@ -33,12 +33,12 @@ export default function Login() {
       },
       body: JSON.stringify(form),
     });
-
     const data = await response.json();
 
     switch (response.status) {
       case 200:
         login(data.access_token, data.refresh_token);
+        localStorage.setItem("userId", data.userId);
         navigate("/");
         break;
       case 400:
