@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from requests.exceptions import HTTPError
 import json
 
@@ -40,8 +41,8 @@ class RegisterView(APIView):
                 return Response(data={'firebase_error': str(e1)}, status=status.HTTP_400_BAD_REQUEST)
             # created successfully the user with all the data without errors
             return Response(data={'exito': 'usuario creado con éxito'}, status=status.HTTP_201_CREATED)
-        except ValueError as e2:
-            return Response(data={'error': str(e2)}, status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError as e2:
+            return Response(data=e2.detail, status=status.HTTP_400_BAD_REQUEST)
         except HTTPError as e3:
             return Response(data=json.loads(e3.strerror), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -57,12 +58,11 @@ class LoginView(APIView):
             validate_login(email, password)
 
             user = auth.sign_in_with_email_and_password(email, password)
-            # user_details = auth_admin.get_user(user['localId'])
             user_details = Client(app).get_user(user['localId'])
             if (not user_details.email_verified):
                 auth.send_email_verification(user['idToken'])
             return Response(data={'access_token': user['idToken'], 'refresh_token': user["refreshToken"]}, status=status.HTTP_200_OK)
-        except ValueError as e:
-            return Response(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError as e:
+            return Response(data=e.detail, status=status.HTTP_400_BAD_REQUEST)
         except HTTPError as e2:
             return Response(data=json.loads(e2.strerror), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
