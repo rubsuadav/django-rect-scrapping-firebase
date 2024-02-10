@@ -18,6 +18,7 @@ def get_restaurant_comments(restaurante_col, restaurantes):
     return restaurantes_con_comentarios
 
 
+### RESTAURANTS METHODS ###
 class IndexView(APIView):
     def get(self, request, restaurant_id=''):
         page = request.query_params.get('page')
@@ -55,6 +56,20 @@ class IndexView(APIView):
                 return Response(data={'error': 'Restaurante no encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
 
+class SearchRestaurantsByNameView(APIView):
+    def get(self, request):
+        query = request.query_params.get('search')
+        restaurante_col = firestore.collection(u'restaurantes')
+        try:
+            restaurantes = restaurante_col.where(
+                u'nombre', u'==', query).stream()
+            return Response(data=get_restaurant_comments(restaurante_col, restaurantes)[0], status=status.HTTP_200_OK)
+        except:
+            return Response(data={'error': f'No se ha encontrado el restaurante con el nombre {query}'},
+                            status=status.HTTP_404_NOT_FOUND)
+
+
+## SUBSCRIPTION METHODS ##
 class SubscriptionView(APIView):
     def post(self, request):
         user_id = request.data.get('user_id')
@@ -72,6 +87,7 @@ class SubscriptionView(APIView):
         return Response(data={"checkout_session": checkout_session["url"]}, status=status.HTTP_200_OK)
 
 
+## CHAT METHODS ##
 class ChatView(APIView):
     def post(self, request):
         user_id = request.data.get('user_id')
