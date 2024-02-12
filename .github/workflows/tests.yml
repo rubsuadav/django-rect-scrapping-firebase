@@ -28,7 +28,7 @@ jobs:
           pip install codacy-coverage
       - name: Run tests
         run: |
-          echo "from local_settings import *" > firebase.py
+          echo "from local_settings import *" >> firebase.py
           coverage run --branch --source=. ./manage.py test  --keepdb 
           coverage xml
       - name: Codacy Coverage Reporter
