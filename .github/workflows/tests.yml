@@ -13,15 +13,15 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10.9"
-      - name: Set environment variables
+      - name: Create local_settings.py
         run: |
-          echo "GOOGLE_APPLICATION_CREDENTIALS_BASE64=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}" >> $GITHUB_ENV
-          echo "FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
-          echo "FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}" >> $GITHUB_ENV
-          echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}" >> $GITHUB_ENV
-          echo "FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}" >> $GITHUB_ENV
-          echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}" >> $GITHUB_ENV
+          echo "GOOGLE_APPLICATION_CREDENTIALS_BASE64=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}" >> local_settings.py
+          echo "FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> local_settings.py
+          echo "FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}" >> local_settings.py
+          echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> local_settings.py
+          echo "FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}" >> local_settings.py
+          echo "FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}" >> local_settings.py
+          echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}" >> local_settings.py
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
