@@ -42,13 +42,13 @@ python manage.py runserver
 
 ## NOTE
 
-<p>You need to have a firebase account and create a project to use this project
+You need to have a firebase account and create a project to use this project
 and put the credentials in the local_settings.py file,
-IF YOU DON'T HAVE A FIREBASE ACCOUNT, YOU CAN'T RUN THE API SERVER</p>
+IF YOU DON'T HAVE A FIREBASE ACCOUNT, YOU CAN'T RUN THE API SERVER
 
 ## NOTE2
 
-<p>You need to activate the authentication method with email and password in the
+You need to activate the authentication method with email and password in the
 firebase console. Also, install the stripe/firestore-stripe-payments extension
 in your firebase project using a stripe SECRET_KEY. Follow the instructions
-on the extension page.</p>
+on the extension page.
