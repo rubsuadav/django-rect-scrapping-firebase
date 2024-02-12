@@ -2,27 +2,27 @@
 
 # INSTALLATION
 
-### 1. Clone this repository
+## 1. Clone this repository
 
 ```bash
 git clone https://github.com/rubsuadav/django-rect-scrapping-firebase.git
 ```
 
-### 2. Create a virtualenv
+## 2. Create a virtualenv
 
 ```bash
 python -m venv venv
 ```
 
-### 3. Activate virtualenv
+## 3. Activate virtualenv
 
-# 3.1. Windows
+### 3.1. Windows
 
 ```bash
 .\venv\Scripts\activate
 ```
 
-# 3.2. Linux
+### 3.2. Linux
 
 ```bash
 source venv/bin/activate
@@ -42,13 +42,13 @@ python manage.py runserver
 
 ### NOTE:
 
-You need to have a firebase account and create a project to use this project
+<p>You need to have a firebase account and create a project to use this project
 and put the credentials in the local_settings.py file,
-IF YOU DON'T HAVE A FIREBASE ACCOUNT, YOU CAN'T RUN THE API SERVER
+IF YOU DON'T HAVE A FIREBASE ACCOUNT, YOU CAN'T RUN THE API SERVER</p>
 
 ## NOTE2:
 
-You need to activate the authentication method with email and password in the
+<p>You need to activate the authentication method with email and password in the
 firebase console. Also, install the stripe/firestore-stripe-payments extension
 in your firebase project using a stripe SECRET_KEY. Follow the instructions
-on the extension page.
+on the extension page.</p>
