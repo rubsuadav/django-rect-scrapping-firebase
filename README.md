@@ -40,7 +40,7 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-### NOTE
+## NOTE
 
 <p>You need to have a firebase account and create a project to use this project
 and put the credentials in the local_settings.py file,
