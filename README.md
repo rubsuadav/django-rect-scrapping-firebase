@@ -1,4 +1,6 @@
-## INSTALATION
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aab804dc1a06435f868a50c655c66c53)](https://app.codacy.com/gh/rubsuadav/django-rect-scrapping-firebase?utm_source=github.com&utm_medium=referral&utm_content=rubsuadav/django-rect-scrapping-firebase&utm_campaign=Badge_Grade)
+
+# INSTALLATION
 
 ### 1. Clone this repository
 
@@ -38,6 +40,15 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-### NOTE: You need to have a firebase account and create a project to use this project and put the credentials in the local_settings.py file, IF YOU DON'T HAVE A FIREBASE ACCOUNT, YOU CAN'T RUN THE API SERVER
+### NOTE:
 
-## NOTE2: You need to activate the authentication method with email and password in the firebase console and install the stripe/firestore-stripe-payments extension in your firebase project using a stripe SECRET_KEY and following the instruccions in the extension page
+You need to have a firebase account and create a project to use this project
+and put the credentials in the local_settings.py file,
+IF YOU DON'T HAVE A FIREBASE ACCOUNT, YOU CAN'T RUN THE API SERVER
+
+## NOTE2:
+
+You need to activate the authentication method with email and password in the
+firebase console. Also, install the stripe/firestore-stripe-payments extension
+in your firebase project using a stripe SECRET_KEY. Follow the instructions
+on the extension page.
