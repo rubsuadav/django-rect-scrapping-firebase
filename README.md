@@ -4,6 +4,8 @@
 
 [![Deploy to Firebase Hosting on merge](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/firebase-hosting-merge.yml)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/fc9aea4996e240f792274adc68f605ad)](https://app.codacy.com/gh/rubsuadav/django-rect-scrapping-firebase/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+
 # INSTALLATION
 
 ## 1. Clone this repository
