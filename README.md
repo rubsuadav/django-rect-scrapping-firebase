@@ -1,5 +1,7 @@
 ## INSTALATION
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aab804dc1a06435f868a50c655c66c53)](https://app.codacy.com/gh/rubsuadav/django-rect-scrapping-firebase?utm_source=github.com&utm_medium=referral&utm_content=rubsuadav/django-rect-scrapping-firebase&utm_campaign=Badge_Grade)
+
 ### 1. Clone this repository
 
 ```bash
