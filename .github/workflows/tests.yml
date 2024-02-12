@@ -15,7 +15,8 @@ jobs:
           python-version: "3.10.9"
       - name: Create local_settings.py
         run: |
-          echo "GOOGLE_APPLICATION_CREDENTIALS_BASE64=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}" >> local_settings.py
+          echo "FIREBASE_SERVICE_ACCOUNT_DJANGO_SCRAPPING_DATA=${{ secrets.FIREBASE_SERVICE_ACCOUNT_DJANGO_SCRAPPING_DATA }}" >> credentials.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS_BASE64=$(base64 credentials.json)" >> local_settings.py
           echo "FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> local_settings.py
           echo "FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}" >> local_settings.py
           echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> local_settings.py
