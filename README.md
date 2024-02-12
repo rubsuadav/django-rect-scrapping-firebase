@@ -1,5 +1,9 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/aab804dc1a06435f868a50c655c66c53)](https://app.codacy.com/gh/rubsuadav/django-rect-scrapping-firebase?utm_source=github.com&utm_medium=referral&utm_content=rubsuadav/django-rect-scrapping-firebase&utm_campaign=Badge_Grade)
 
+[![Codacy Analysis CLI](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/analysis.yml/badge.svg)](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/analysis.yml)
+
+[![Deploy to Firebase Hosting on merge](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/firebase-hosting-merge.yml)
+
 # INSTALLATION
 
 ## 1. Clone this repository

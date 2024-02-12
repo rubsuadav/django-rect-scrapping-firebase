@@ -1,0 +1,37 @@
+name: Python application tests and coverage
+
+on: [push]
+
+jobs:
+  build:
+    name: Tests and coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10.9"
+      - name: Set environment variables
+        run: |
+          echo "GOOGLE_APPLICATION_CREDENTIALS_BASE64=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}" >> $GITHUB_ENV
+          echo "FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" >> $GITHUB_ENV
+          echo "FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}" >> $GITHUB_ENV
+          echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
+          echo "FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}" >> $GITHUB_ENV
+          echo "FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}" >> $GITHUB_ENV
+          echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}" >> $GITHUB_ENV
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install codacy-coverage
+      - name: Run tests
+        run: |
+          coverage run --branch --source=. ./manage.py test  --keepdb 
+          coverage xml
+      - name: Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
