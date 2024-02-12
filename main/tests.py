@@ -1,7 +1,6 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 import json
-from firebase import auth
 
 
 def get_token(self):
