@@ -8,7 +8,7 @@ export default defineConfig({
     environment: "happy-dom",
     coverage: {
       provider: "istanbul",
-      reporter: ["text", "html", "json-summary", "cobertura"],
+      reporter: ["text", "html", "json-summary", "lcovonly"],
     },
   },
 });
