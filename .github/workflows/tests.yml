@@ -17,8 +17,3 @@ jobs:
           cd frontend
           npm ci
           npm run coverage
-      - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-coverage-reporter-action@master
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/cobertura-lcov.info
