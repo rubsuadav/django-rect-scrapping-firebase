@@ -12,13 +12,11 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version: 20
-      - name: Install dependencies
+      - name: Install dependencies and run tests
         run: |
           cd frontend
           npm ci
-      - name: Run tests
-        run: npm run coverage
-
+          npm run coverage
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-coverage-reporter-action@master
         with:
