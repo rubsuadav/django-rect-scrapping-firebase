@@ -6,6 +6,10 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "happy-dom",
+    browser: {
+      enabled: true,
+      name: "chrome",
+    },
     coverage: {
       provider: "istanbul",
       reporter: ["text", "html", "json-summary", "lcovonly"],
