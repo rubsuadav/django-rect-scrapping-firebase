@@ -10,14 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          cd frontend
-          npm i
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: npm run dev
+          start: cd frontend && npm run dev
           wait-on: "http://localhost:5173" # Waits for above
           record: true # Records to Cypress Cloud
           parallel: true # Runs test in parallel using settings above
