@@ -13,7 +13,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: cd frontend && npm run dev
+          working-directory: frontend
+          start: npm run dev
           wait-on: "http://localhost:5173" # Waits for above
           record: true # Records to Cypress Cloud
           parallel: true # Runs test in parallel using settings above
