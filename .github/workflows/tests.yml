@@ -11,7 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install dependencies
-        run: npm i
+        run: |
+          cd frontend
+          npm i
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
@@ -19,7 +21,7 @@ jobs:
           wait-on: "http://localhost:5173" # Waits for above
           record: true # Records to Cypress Cloud
           parallel: true # Runs test in parallel using settings above
-          tag: 'test, production' # Tags the test run
+          tag: "test, production" # Tags the test run
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
