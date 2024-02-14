@@ -6,6 +6,10 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/fc9aea4996e240f792274adc68f605ad)](https://app.codacy.com/gh/rubsuadav/django-rect-scrapping-firebase/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
+[![Test and Build](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/tests.yml/badge.svg)](https://github.com/rubsuadav/django-rect-scrapping-firebase/actions/workflows/tests.yml)
+
+[![Cloud Testing](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/i5d8yd&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/i5d8yd/runs)
+
 # INSTALLATION
 
 ## 1. Clone this repository

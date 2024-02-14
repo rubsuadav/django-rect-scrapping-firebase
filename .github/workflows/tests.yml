@@ -1,19 +1,26 @@
-name: Test and Build
-
-on: ["push"]
-
+name: Cypress Tests
+on: [push]
 jobs:
-  build:
+  cypress-run:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
     steps:
-      - name: Checkout code
-        uses: actions/checkout@main
-      - name: Use Node.js
-        uses: actions/setup-node@main
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
         with:
-          node-version: 20
-      - name: Install dependencies and run tests
-        run: |
-          cd frontend
-          npm ci
-          npm run coverage
+          start: npm run dev
+          wait-on: "http://localhost:5173" # Waits for above
+          record: true # Records to Cypress Cloud
+          parallel: true # Runs test in parallel using settings above
+          tag: 'test, production' # Tags the test run
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # Creating a token https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show coverage report
+        run: npm run coverage
