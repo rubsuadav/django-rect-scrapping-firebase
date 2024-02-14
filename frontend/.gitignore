@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+screenshots
+mocha*
+.nyc*
 
 # Editor directories and files
 .vscode/*
